@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ComponentScan("ru.sergey_gusarov.hw7_8")
 class BookRepositoryTest {
     private final static String COMMENT_FOR_ADD_1 = "comment1";
 

@@ -16,17 +16,17 @@ public class Book {
             cascade = {CascadeType.ALL})
     @JoinTable(name = "BOOK_GENRE_REL",
             joinColumns = @JoinColumn(name = "BOOK_ID"),
-            inverseJoinColumns = @JoinColumn(name = "GENRE_ID"))
+            inverseJoinColumns = @JoinColumn(name = "GENRE_ID", nullable = false, updatable = false))
     private Set<Genre> genres = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.ALL})
     @JoinTable(name = "BOOK_AUTHOR_REL",
             joinColumns = @JoinColumn(name = "BOOK_ID"),
-            inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
+            inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID", nullable = false, updatable = false))
     private Set<Author> authors = new HashSet<>();
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<BookComment> bookComments = new HashSet<>();
 
     public Book() {

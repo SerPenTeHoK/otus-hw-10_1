@@ -7,6 +7,7 @@ import ru.sergey_gusarov.hw10.domain.books.BookComment;
 
 @Service
 public class CommentsServiceIImpl implements CommentsService {
+
     private final BookRepository bookRepository;
 
     public CommentsServiceIImpl(BookRepository bookRepository) {

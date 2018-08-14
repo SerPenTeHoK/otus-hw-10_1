@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ru.sergey_gusarov.hw10.Main;
 import ru.sergey_gusarov.hw10.domain.books.Author;
 import ru.sergey_gusarov.hw10.domain.books.Book;
 import ru.sergey_gusarov.hw10.domain.books.BookComment;
@@ -24,9 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ComponentScan("ru.sergey_gusarov.hw10")
 class BookCommentRepositoryTest {
-
     @Autowired
     private BookCommentRepository bookCommentRepository;
     @Autowired
@@ -106,6 +106,7 @@ class BookCommentRepositoryTest {
     void findAll() {
         final int COUNT_ITERATION = 3;
         Book book = dummyBook1Genre1Author2();
+        book = bookRepository.save(book);
         List<BookComment> bookComments = new ArrayList<>();
 
         for (Integer i = 0; i < COUNT_ITERATION; i++) {
@@ -129,6 +130,7 @@ class BookCommentRepositoryTest {
     void update() {
         String commentStrUpdate = "update comment";
         Book book = dummyBook1Genre1Author2();
+        book = bookRepository.save(book);
         BookComment bookComment = createBookComment(book, "Comment001");
         bookCommentRepository.save(bookComment);
 
@@ -148,6 +150,7 @@ class BookCommentRepositoryTest {
     void delete() {
         final long COUNT_ITERATION = 3;
         Book book = dummyBook1Genre1Author2();
+        book = bookRepository.save(book);
         List<BookComment> bookComments = new ArrayList<>();
 
         for (Integer i = 0; i < COUNT_ITERATION; i++) {
@@ -181,7 +184,7 @@ class BookCommentRepositoryTest {
         bookCommentRepository.delete(bookCommentsForDelete);
         bookCommentsForDelete = bookCommentRepository.getById(bookComments.get(2).getId());
         bookCommentRepository.delete(bookCommentsForDelete);
-        count = bookRepository.count();
+        count = bookCommentRepository.count();
         assertEquals(0L, count);
     }
 

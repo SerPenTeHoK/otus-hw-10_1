@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import ru.sergey_gusarov.hw10.dao.books.BookRepository;
 import ru.sergey_gusarov.hw10.dao.books.dict.DictAuthorRepository;
 import ru.sergey_gusarov.hw10.dao.books.dict.DictGenreRepository;
@@ -12,6 +13,7 @@ import ru.sergey_gusarov.hw10.domain.books.Book;
 import ru.sergey_gusarov.hw10.domain.books.Genre;
 
 import javax.persistence.NoResultException;
+import java.util.HashSet;
 
 
 @ShellComponent
@@ -45,33 +47,20 @@ public class BookShell {
     }
 
     @ShellMethod("Book insert")
+    @Transactional
     public void bookInsert(@ShellOption String title, @ShellOption String authorName, @ShellOption String genreName) {
         Book book = new Book();
         book.setTitle(title);
-        //book-insert t1 a1 g1
-        //book-list
-        //book-comment-insert 1 text
-        Author author;
-        try {
-            author = dictAuthorRepository.getByName(authorName);
-        } catch (Exception ex) {
-            if (ex.getCause() instanceof NoResultException)
-                author = new Author(authorName);
-            else
-                throw ex;
-        }
-        book.getAuthors().add(author);
+        Author author = dictAuthorRepository.getByName(authorName);
+        if(author == null)
+            author = new Author(authorName);
 
-        Genre genre;
-        try {
-            genre = dictGenreRepository.getByName(genreName);
-        } catch (Exception ex) {
-            if (ex.getCause() instanceof NoResultException)
-                genre = new Genre(genreName);
-            else
-                throw ex;
-        }
+        book.getAuthors().add(author);
+        Genre genre = dictGenreRepository.getByName(genreName);
+        if(genre == null)
+            genre = new Genre(genreName);
         book.getGenres().add(genre);
+
         bookRepository.save(book);
     }
 

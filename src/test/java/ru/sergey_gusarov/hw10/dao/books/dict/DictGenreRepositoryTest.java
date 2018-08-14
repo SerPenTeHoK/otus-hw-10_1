@@ -21,9 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@ComponentScan("ru.sergey_gusarov.hw10")
 class DictGenreRepositoryTest {
-
     @Autowired
     DictGenreRepository dictGenreRepository;
 

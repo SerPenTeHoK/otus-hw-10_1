@@ -10,7 +10,7 @@ public class BookComment {
     @GeneratedValue(generator = "BookCommentSeqGen")
     long id;
     String text;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BOOK_ID", nullable = false)
     Book book;
 
