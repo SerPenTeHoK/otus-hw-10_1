@@ -12,9 +12,6 @@ import ru.sergey_gusarov.hw10.domain.books.Author;
 import ru.sergey_gusarov.hw10.domain.books.Book;
 import ru.sergey_gusarov.hw10.domain.books.Genre;
 
-import javax.persistence.NoResultException;
-import java.util.HashSet;
-
 
 @ShellComponent
 public class BookShell {
@@ -52,12 +49,12 @@ public class BookShell {
         Book book = new Book();
         book.setTitle(title);
         Author author = dictAuthorRepository.getByName(authorName);
-        if(author == null)
+        if (author == null)
             author = new Author(authorName);
 
         book.getAuthors().add(author);
         Genre genre = dictGenreRepository.getByName(genreName);
-        if(genre == null)
+        if (genre == null)
             genre = new Genre(genreName);
         book.getGenres().add(genre);
 

@@ -56,9 +56,9 @@ public class BookComment {
                 .append("' book = ");
         Book bookObj = getBook();
 
-        if(bookObj == null)
+        if (bookObj == null)
             sb.append("No book");
-        else{
+        else {
             sb.append("[ title = '");
             String bookTitle = bookObj.getTitle();
             if (bookTitle == null)

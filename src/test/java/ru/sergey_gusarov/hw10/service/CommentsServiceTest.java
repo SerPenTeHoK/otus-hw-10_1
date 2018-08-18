@@ -9,17 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.sergey_gusarov.hw10.Main;
 import ru.sergey_gusarov.hw10.dao.books.BookRepository;
 import ru.sergey_gusarov.hw10.domain.books.Author;
 import ru.sergey_gusarov.hw10.domain.books.Book;
 import ru.sergey_gusarov.hw10.domain.books.BookComment;
 import ru.sergey_gusarov.hw10.domain.books.Genre;
-import ru.sergey_gusarov.hw10.service.*;
 
 import java.util.HashSet;
 import java.util.Optional;

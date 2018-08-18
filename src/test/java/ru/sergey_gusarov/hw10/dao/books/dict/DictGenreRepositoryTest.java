@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.sergey_gusarov.hw10.domain.books.Genre;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,15 +25,19 @@ class DictGenreRepositoryTest {
     @Autowired
     DictGenreRepository dictGenreRepository;
 
-    private Genre dummyGenre1(){
+    private Genre dummyGenre1() {
         return new Genre("Genre1");
-    };
+    }
+
+    ;
 
     @BeforeEach
     @Sql(scripts = "classpath:schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    private void reSetupSchema(){
+    private void reSetupSchema() {
 
-    };
+    }
+
+    ;
 
     @Test
     @DisplayName("Count")
@@ -46,6 +50,13 @@ class DictGenreRepositoryTest {
     @Test
     @DisplayName("Get by id")
     void getById() {
+        Genre original = new Genre("Genre 1");
+        dictGenreRepository.save(original);
+        Optional<Genre> fromDbOptional = Optional.ofNullable(dictGenreRepository.getByName(original.getName()));
+        Genre fromDb = fromDbOptional.get();
+        fromDbOptional = Optional.ofNullable(dictGenreRepository.getById(fromDb.getId()));
+        fromDb = fromDbOptional.get();
+        assertEquals(original.getName(), fromDb.getName());
     }
 
     @Test

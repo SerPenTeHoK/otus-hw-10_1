@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.sergey_gusarov.hw10.domain.books.Author;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,15 +26,19 @@ class DictAuthorRepositoryTest {
     @Autowired
     DictAuthorRepository dictAuthorRepository;
 
-    private Author dummyAuthor1(){
+    private Author dummyAuthor1() {
         return new Author("Author1");
-    };
+    }
+
+    ;
 
     @BeforeEach
     @Sql(scripts = "classpath:schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    private void reSetupSchema(){
+    private void reSetupSchema() {
 
-    };
+    }
+
+    ;
 
     @Test
     @DisplayName("Count")
@@ -47,6 +51,13 @@ class DictAuthorRepositoryTest {
     @Test
     @DisplayName("Get by id")
     void getById() {
+        Author original = new Author("Author 1");
+        dictAuthorRepository.save(original);
+        Optional<Author> fromDbOptional = Optional.ofNullable(dictAuthorRepository.getByName(original.getName()));
+        Author fromDb = fromDbOptional.get();
+        fromDbOptional = Optional.ofNullable(dictAuthorRepository.getById(fromDb.getId()));
+        fromDb = fromDbOptional.get();
+        assertEquals(original.getName(), fromDb.getName());
     }
 
     @Test

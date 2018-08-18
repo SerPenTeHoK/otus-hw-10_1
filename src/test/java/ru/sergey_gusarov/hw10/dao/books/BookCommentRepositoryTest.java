@@ -8,12 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import ru.sergey_gusarov.hw10.Main;
 import ru.sergey_gusarov.hw10.domain.books.Author;
 import ru.sergey_gusarov.hw10.domain.books.Book;
 import ru.sergey_gusarov.hw10.domain.books.BookComment;
@@ -21,7 +18,8 @@ import ru.sergey_gusarov.hw10.domain.books.Genre;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -56,9 +54,11 @@ class BookCommentRepositoryTest {
 
     @BeforeEach
     @Sql(scripts = "classpath:schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    private void reSetupSchema(){
+    private void reSetupSchema() {
 
-    };
+    }
+
+    ;
 
     @Test
     @DisplayName("Count")
