@@ -8,8 +8,8 @@ public class BookComment {
     @Id
     @SequenceGenerator(name = "BookCommentSeqGen", sequenceName = "BookCommentSeq", initialValue = 1, allocationSize = 0)
     @GeneratedValue(generator = "BookCommentSeqGen")
-    long id;
-    String text;
+    private long id;
+    private String text;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BOOK_ID", nullable = false)
     Book book;
